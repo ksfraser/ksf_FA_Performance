@@ -9,6 +9,7 @@ define('SS_PERFORMANCE', 130 << 8);
 
 class hooks_fa_performance extends hooks {
     var $module_name = 'fa_performance';
+    var $version = '1.0.0';
 
     function install_options($app) {
         global $path_to_root;
