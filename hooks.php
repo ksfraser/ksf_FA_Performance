@@ -7,9 +7,9 @@
 
 define('SS_PERFORMANCE', 130 << 8);
 
-class hooks_fa_performance extends hooks {
-    var $module_name = 'fa_performance';
-    var $version = '1.0.0';
+class hooks_ksf_FA_Performance extends hooks {
+    var $module_name = 'ksf_FA_Performance';
+    var $version = '2.4.0';
 
     function install_options($app) {
         global $path_to_root;
@@ -38,6 +38,13 @@ class hooks_fa_performance extends hooks {
         $security_areas['SA_PERFORMANCECREATE'] = array(SS_PERFORMANCE | 2, _("Create Reviews"));
         $security_areas['SA_PERFORMANCEMANAGE'] = array(SS_PERFORMANCE | 3, _("Manage Goals"));
         return array($security_areas, $security_sections);
+    }
+
+    function install_extension($check_only=true) {
+        return true;
+    }
+
+    function install_tabs($app) {
     }
 
     function activate_extension($company, $check_only=true) {
