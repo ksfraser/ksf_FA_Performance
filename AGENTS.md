@@ -161,3 +161,30 @@ Performance -> Manager: Display updated progress
 - **ksf_FA_CRM** (employee contacts)#
 - **ksf_FA_ProjectManagement** (project/task linkage)#
 - **FrontAccounting 2.4+** (FA core)#
+
+## Development Workflow
+
+All development is done in the **devel tree** (`~/Documents/ksf_FA_Performance`). Do **not** edit files in the UAT bind point directly.
+
+### Workflow Steps
+1. **Develop** in this repo (feature branches preferred)
+2. **Test**: run repo-appropriate tests
+3. **Lint**: `php -l` on modified PHP files (no syntax errors)
+4. **Commit** and **Push** branch to GitHub
+5. **Merge** to `master` when ready
+6. **Push** `master` to GitHub
+7. **Deploy** to UAT by pulling in the Infrastructure bind point:
+
+   ```
+   cd ~/ksf_Infrastructure/fa_modules/ksf_FA_Performance
+   git stash -u
+   git pull origin master
+   git stash pop
+   ```
+
+### UAT Bind Point
+| Path | Purpose |
+|------|---------|
+| `~/Documents/ksf_FA_Performance` | Devel tree — all development, testing, commits |
+| `~/ksf_Infrastructure/fa_modules/ksf_FA_Performance` | UAT bind point — deployment target, integration testing (if mirrored) |
+
