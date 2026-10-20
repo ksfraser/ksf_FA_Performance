@@ -8,12 +8,12 @@
 ```
 ksf_FA_Performance/
 ├── sql/
-│   ├── fa_performance_goals.sql        # OKR goals (Objective, Key Result, Task)
-│   ├── fa_performance_reviews.sql      # Performance reviews
-│   ├── fa_performance_review_goals.sql # Review-goal linkage
-│   ├── fa_performance_checkins.sql     # Regular OKR check-ins
-│   ├── fa_pm_versions.sql              # Quarters (Q1-2026, etc.)
-│   └── fa_pm_task_progress.sql         # OpenProject-style progress tracking
+│   ├── ksf_performance_goals.sql        # OKR goals (Objective, Key Result, Task)
+│   ├── ksf_performance_reviews.sql      # Performance reviews
+│   ├── ksf_performance_review_goals.sql # Review-goal linkage
+│   ├── ksf_performance_checkins.sql     # Regular OKR check-ins
+│   ├── ksf_performance_versions.sql              # Quarters (Q1-2026, etc.)
+│   └── ksf_performance_task_progress.sql         # OpenProject-style progress tracking
 ├── includes/
 │   ├── performance_goals_db.inc
 │   ├── performance_reviews_db.inc
@@ -34,7 +34,7 @@ ksf_FA_Performance/
 Strategic Initiative (Top Level)
     └── Objective (Linked to employee)
             └── Key Result (Measurable outcome)
-                        └── Task (Linked to fa_pm_tasks)
+                        └── Task (Linked to ksf_projectmanagement_tasks)
 ```
 ## Documentation (UML/BABOK)
 ```php
@@ -56,7 +56,7 @@ function write_performance_goal($goal_id, $data) { ... }
 - `parent_goal_id` links to `goal_id` (self-referencing)
 ### Strategy Pattern
 - Progress calculation: work-based vs status-based (OpenProject-style)
-- `fa_pm_task_progress` table supports both modes
+- `ksf_performance_task_progress` table supports both modes
 ### Hook Pattern (FA Native)
 - Uses FA's `update_databases()` for multi-SQL file handling
 ## Composer/Packagist
@@ -82,10 +82,10 @@ function write_performance_goal($goal_id, $data) { ... }
 See `ProjectDocs/RTM.md` for full traceability:
 | Req ID | Description | Test Case | Code File | Version |
 |--------|-------------|-----------|----------|---------|
-| REQ-001 | OKR Goals Hierarchy | testGoalHierarchy | sql/fa_performance_goals.sql | v1.0.0 |
-| REQ-002 | Performance Reviews | testReviewCreation | sql/fa_performance_reviews.sql | v1.0.0 |
-| REQ-003 | Quarterly Check-ins | testCheckinCreation | sql/fa_performance_checkins.sql | v1.1.0 |
-| REQ-004 | Progress Tracking | testProgressCalc | sql/fa_pm_task_progress.sql | v1.2.0 |
+| REQ-001 | OKR Goals Hierarchy | testGoalHierarchy | sql/ksf_performance_goals.sql | v1.0.0 |
+| REQ-002 | Performance Reviews | testReviewCreation | sql/ksf_performance_reviews.sql | v1.0.0 |
+| REQ-003 | Quarterly Check-ins | testCheckinCreation | sql/ksf_performance_checkins.sql | v1.1.0 |
+| REQ-004 | Progress Tracking | testProgressCalc | sql/ksf_performance_task_progress.sql | v1.2.0 |
 ## BABOK Alignment
 See `ProjectDocs/BABOK.md` for business analysis alignment:
 - **BR-008**: Performance Management - OKR framework (Objectives/Key Results)
@@ -100,9 +100,9 @@ See `ProjectDocs/UML.md` for:
 ### Example: OKR Check-in Sequence
 ```
 Manager -> Performance: Create Check-in
-Performance -> DB: Insert fa_performance_checkins
+Performance -> DB: Insert ksf_performance_checkins
 Performance -> Goal: Update progress
-Performance -> DB: Update fa_performance_goals.progress
+Performance -> DB: Update ksf_performance_goals.progress
 Performance -> Manager: Display updated progress
 ```
 ## Dependencies

@@ -1,12 +1,12 @@
 <?php
 /**
- * DB functions for fa_performance_goals table
+ * DB functions for ksf_performance_goals table
  * OKR-style goal management
  */
 
 function write_performance_goal($goal_id, $data) {
     if ($goal_id) {
-        $sql = "UPDATE `" . TB_PREF . "fa_performance_goals` SET ";
+        $sql = "UPDATE `" . TB_PREF . "ksf_performance_goals` SET ";
         $sets = array();
         foreach (array('person_id', 'goal_type', 'parent_goal_id', 'title', 'description', 'project_id', 'task_id', 'start_date', 'target_date', 'priority', 'impact_score', 'progress', 'status', 'measurement', 'baseline_value', 'target_value', 'current_value', 'quarter', 'version_id') as $field) {
             if (isset($data[$field])) {
@@ -15,7 +15,7 @@ function write_performance_goal($goal_id, $data) {
         }
         $sql .= implode(', ', $sets) . " WHERE `goal_id` = " . db_escape($goal_id);
     } else {
-        $sql = "INSERT INTO `" . TB_PREF . "fa_performance_goals` SET ";
+        $sql = "INSERT INTO `" . TB_PREF . "ksf_performance_goals` SET ";
         $sets = array();
         foreach (array('person_id', 'goal_type', 'parent_goal_id', 'title', 'description', 'project_id', 'task_id', 'start_date', 'target_date', 'priority', 'impact_score', 'progress', 'status', 'measurement', 'baseline_value', 'target_value', 'current_value', 'quarter', 'version_id') as $field) {
             if (isset($data[$field])) {
@@ -31,7 +31,7 @@ function write_performance_goal($goal_id, $data) {
 
 function get_performance_goal($goal_id) {
     $sql = "SELECT g.*, p.name as employee_name
-        FROM `" . TB_PREF . "fa_performance_goals` g
+        FROM `" . TB_PREF . "ksf_performance_goals` g
         LEFT JOIN `0_crm_persons` p ON g.person_id = p.id
         WHERE g.`goal_id` = " . db_escape($goal_id);
     $result = db_query($sql, "Failed to get performance goal");
@@ -40,8 +40,8 @@ function get_performance_goal($goal_id) {
 
 function get_goals_by_person($person_id, $quarter = null, $goal_type = null) {
     $sql = "SELECT g.*, pg.title as parent_title
-        FROM `" . TB_PREF . "fa_performance_goals` g
-        LEFT JOIN `" . TB_PREF . "fa_performance_goals` pg ON g.parent_goal_id = pg.goal_id
+        FROM `" . TB_PREF . "ksf_performance_goals` g
+        LEFT JOIN `" . TB_PREF . "ksf_performance_goals` pg ON g.parent_goal_id = pg.goal_id
         WHERE g.`person_id` = " . db_escape($person_id);
     
     if ($quarter) {
@@ -57,7 +57,7 @@ function get_goals_by_person($person_id, $quarter = null, $goal_type = null) {
 
 function get_goals_by_quarter($quarter, $goal_type = null) {
     $sql = "SELECT g.*, p.name as employee_name
-        FROM `" . TB_PREF . "fa_performance_goals` g
+        FROM `" . TB_PREF . "ksf_performance_goals` g
         LEFT JOIN `0_crm_persons` p ON g.person_id = p.id
         WHERE g.`quarter` = " . db_escape($quarter);
     
@@ -71,7 +71,7 @@ function get_goals_by_quarter($quarter, $goal_type = null) {
 
 function get_okr_hierarchy($quarter) {
     // Get all Strategic Initiatives
-    $sql = "SELECT * FROM `" . TB_PREF . "fa_performance_goals`
+    $sql = "SELECT * FROM `" . TB_PREF . "ksf_performance_goals`
         WHERE `quarter` = " . db_escape($quarter) . "
         AND `goal_type` = 'StrategicInitiative'
         AND `status` != 'Cancelled'
@@ -88,7 +88,7 @@ function get_okr_hierarchy($quarter) {
 }
 
 function get_child_goals($parent_id) {
-    $sql = "SELECT * FROM `" . TB_PREF . "fa_performance_goals`
+    $sql = "SELECT * FROM `" . TB_PREF . "ksf_performance_goals`
         WHERE `parent_goal_id` = " . db_escape($parent_id) . "
         AND `status` != 'Cancelled'
         ORDER BY `goal_type`, `priority` DESC";
@@ -104,7 +104,7 @@ function get_child_goals($parent_id) {
 }
 
 function update_goal_progress($goal_id, $progress) {
-    $sql = "UPDATE `" . TB_PREF . "fa_performance_goals` 
+    $sql = "UPDATE `" . TB_PREF . "ksf_performance_goals` 
         SET `progress` = " . db_escape($progress) . "
         WHERE `goal_id` = " . db_escape($goal_id);
     db_query($sql, "Failed to update goal progress");
@@ -112,11 +112,11 @@ function update_goal_progress($goal_id, $progress) {
 
 function delete_performance_goal($goal_id) {
     // Delete children first
-    $sql = "DELETE FROM `" . TB_PREF . "fa_performance_goals` WHERE `parent_goal_id` = " . db_escape($goal_id);
+    $sql = "DELETE FROM `" . TB_PREF . "ksf_performance_goals` WHERE `parent_goal_id` = " . db_escape($goal_id);
     db_query($sql, "Failed to delete child goals");
     
     // Delete the goal itself
-    $sql = "DELETE FROM `" . TB_PREF . "fa_performance_goals` WHERE `goal_id` = " . db_escape($goal_id);
+    $sql = "DELETE FROM `" . TB_PREF . "ksf_performance_goals` WHERE `goal_id` = " . db_escape($goal_id);
     db_query($sql, "Failed to delete performance goal");
 }
 ?>

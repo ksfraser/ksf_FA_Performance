@@ -1,7 +1,9 @@
--- fa_performance_reviews table
+-- ksf_performance_reviews table
 -- Performance reviews linked to goals
 
-CREATE TABLE IF NOT EXISTS `fa_performance_reviews` (
+ALTER TABLE IF EXISTS `fa_performance_reviews` RENAME TO `0_ksf_performance_reviews`;
+
+CREATE TABLE IF NOT EXISTS `0_ksf_performance_reviews` (
     `review_id` INT(11) NOT NULL AUTO_INCREMENT,
     `person_id` INT(11) NOT NULL COMMENT 'FK to 0_crm_persons (employee being reviewed)',
     `reviewer_person_id` INT(11) NOT NULL COMMENT 'FK to 0_crm_persons (reviewer)',

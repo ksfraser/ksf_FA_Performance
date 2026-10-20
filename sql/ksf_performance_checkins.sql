@@ -1,7 +1,9 @@
--- fa_performance_checkins table
+-- ksf_performance_checkins table
 -- Regular OKR check-ins (weekly/bi-weekly)
 
-CREATE TABLE IF NOT EXISTS `fa_performance_checkins` (
+ALTER TABLE IF EXISTS `fa_performance_checkins` RENAME TO `0_ksf_performance_checkins`;
+
+CREATE TABLE IF NOT EXISTS `0_ksf_performance_checkins` (
     `checkin_id` INT(11) NOT NULL AUTO_INCREMENT,
     `goal_id` INT(11) NOT NULL,
     `checked_by` INT(11) NOT NULL COMMENT 'FK to 0_crm_persons',
@@ -16,6 +18,6 @@ CREATE TABLE IF NOT EXISTS `fa_performance_checkins` (
     KEY `idx_goal` (`goal_id`),
     KEY `idx_checked_by` (`checked_by`),
     KEY `idx_date` (`checkin_date`),
-    CONSTRAINT `fk_checkin_goal` FOREIGN KEY (`goal_id`) REFERENCES `fa_performance_goals`(`goal_id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_checkin_goal` FOREIGN KEY (`goal_id`) REFERENCES `ksf_performance_goals`(`goal_id`) ON DELETE CASCADE,
     CONSTRAINT `fk_checkin_person` FOREIGN KEY (`checked_by`) REFERENCES `0_crm_persons`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -1,6 +1,9 @@
 -- Performance module database schema for FrontAccounting
 
-CREATE TABLE IF NOT EXISTS `fa_performance_reviews` (
+ALTER TABLE IF EXISTS `fa_performance_goals` RENAME TO `0_ksf_performance_goals`;
+ALTER TABLE IF EXISTS `fa_performance_reviews` RENAME TO `0_ksf_performance_reviews`;
+
+CREATE TABLE IF NOT EXISTS `0_ksf_performance_reviews` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `employee_id` INT(11) NOT NULL,
     `reviewer_id` INT(11) NOT NULL,
@@ -16,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `fa_performance_reviews` (
     KEY `employee_id` (`employee_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE IF NOT EXISTS `fa_performance_goals` (
+CREATE TABLE IF NOT EXISTS `0_ksf_performance_goals` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `employee_id` INT(11) NOT NULL,
     `title` VARCHAR(255) NOT NULL,
@@ -28,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `fa_performance_goals` (
     KEY `employee_id` (`employee_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `fa_modules` (`name`, `version`, `enabled`, `installed`) VALUES ('Performance', '1.0.0', 1, NOW()) ON DUPLICATE KEY UPDATE `version` = '1.0.0';
+INSERT INTO `0_ksf_modules` (`name`, `version`, `enabled`, `installed`) VALUES ('Performance', '1.0.0', 1, NOW()) ON DUPLICATE KEY UPDATE `version` = '1.0.0';
 
 -- ---------------------------------------------------------------------------
 -- Module-local employee directory.

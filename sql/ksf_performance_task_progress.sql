@@ -1,7 +1,9 @@
--- fa_pm_task_progress table
+-- ksf_performance_task_progress table
 -- Track progress based on work packages (OpenProject-style)
 
-CREATE TABLE IF NOT EXISTS `fa_pm_task_progress` (
+ALTER TABLE IF EXISTS `fa_pm_task_progress` RENAME TO `0_ksf_performance_task_progress`;
+
+CREATE TABLE IF NOT EXISTS `0_ksf_performance_task_progress` (
     `progress_id` INT(11) NOT NULL AUTO_INCREMENT,
     `task_id` VARCHAR(20) NOT NULL,
     `progress_mode` VARCHAR(20) DEFAULT 'work_based' COMMENT 'work_based, status_based',
@@ -13,5 +15,5 @@ CREATE TABLE IF NOT EXISTS `fa_pm_task_progress` (
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`progress_id`),
     UNIQUE KEY `idx_task` (`task_id`),
-    CONSTRAINT `fk_progress_task` FOREIGN KEY (`task_id`) REFERENCES `fa_pm_tasks`(`task_id`) ON DELETE CASCADE
+    CONSTRAINT `fk_progress_task` FOREIGN KEY (`task_id`) REFERENCES `ksf_projectmanagement_tasks`(`task_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -1,7 +1,9 @@
--- fa_pm_versions table
+-- ksf_performance_versions table
 -- PM versions (Q1-2026, Q2-2026, etc.) for goal/OKR tracking
 
-CREATE TABLE IF NOT EXISTS `fa_pm_versions` (
+ALTER TABLE IF EXISTS `fa_pm_versions` RENAME TO `0_ksf_performance_versions`;
+
+CREATE TABLE IF NOT EXISTS `0_ksf_performance_versions` (
     `version_id` INT(11) NOT NULL AUTO_INCREMENT,
     `version_name` VARCHAR(50) NOT NULL COMMENT 'Q1-2026, v2.0, etc.',
     `description` TEXT,
@@ -14,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `fa_pm_versions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Default versions (quarters)
-INSERT IGNORE INTO `fa_pm_versions` (`version_name`, `description`, `start_date`, `end_date`) VALUES
+INSERT IGNORE INTO `ksf_performance_versions` (`version_name`, `description`, `start_date`, `end_date`) VALUES
 ('Q1-2026', 'Q1 2026 (Jan-Mar)', '2026-01-01', '2026-03-31'),
 ('Q2-2026', 'Q2 2026 (Apr-Jun)', '2026-04-01', '2026-06-30'),
 ('Q3-2026', 'Q3 2026 (Jul-Sep)', '2026-07-01', '2026-09-30'),
